@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Profile Detail - Student Records Manager</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fstudentre4158back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.6"></script>
+</head>
+<body class="min-h-screen bg-background font-inter">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 opacity-5">
+        <svg class="w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                    <path d="M 10 0 L 0 0 0 10" fill="none" stroke="currentColor" stroke-width="0.5"/>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)"/>
+        </svg>
+    </div>
+
+    <!-- Header -->
+    <header class="relative bg-surface border-b border-border-light shadow-card">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo and Navigation -->
+                <div class="flex items-center space-x-8">
+                    <div class="flex items-center">
+                        <div class="flex items-center justify-center w-8 h-8 bg-primary-600 rounded-lg mr-3">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                            </svg>
+                        </div>
+                        <span class="text-xl font-semibold text-text-primary">Student Records Manager</span>
+                    </div>
+                    
+                    <!-- Navigation Links -->
+                    <nav class="hidden md:flex space-x-6">
+                        <a href="dashboard.html" class="text-text-secondary hover:text-primary-600 font-medium transition-smooth">Dashboard</a>
+                        <a href="student_records_management.html" class="text-primary-600 font-medium">Students</a>
+                        <a href="user_profile_settings.html" class="text-text-secondary hover:text-primary-600 font-medium transition-smooth">Settings</a>
+                    </nav>
+                </div>
+
+                <!-- User Menu -->
+                <div class="flex items-center space-x-4">
+                    <div class="hidden md:flex items-center space-x-3">
+                        <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="User Avatar" class="w-8 h-8 rounded-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                        <span id="userNameDisplay" class="text-sm font-medium text-text-primary">Admin User</span>
+                    </div>
+                    <button onclick="logout()" class="text-text-secondary hover:text-error-600 transition-smooth">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Breadcrumb -->
+        <nav class="flex items-center space-x-2 text-sm text-text-secondary mb-6">
+            <a href="dashboard.html" class="hover:text-primary-600 transition-smooth">Dashboard</a>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+            <a href="student_records_management.html" class="hover:text-primary-600 transition-smooth">Students</a>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+            <span id="studentNameBreadcrumb" class="text-text-primary font-medium">Sarah Johnson</span>
+        </nav>
+
+        <!-- Action Bar -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
+            <div class="flex items-center space-x-4">
+                <button onclick="goBack()" class="inline-flex items-center px-4 py-2 border border-border-medium rounded-lg text-text-secondary hover:text-text-primary hover:border-border-medium transition-smooth">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+                    Back to List
+                </button>
+                <h1 class="text-2xl font-semibold text-text-primary">Student Profile</h1>
+            </div>
+            
+            <div class="flex items-center space-x-3">
+                <button id="saveButton" onclick="saveChanges()" class="hidden px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-smooth">
+                    <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                    Save Changes
+                </button>
+                <button onclick="printProfile()" class="px-4 py-2 border border-border-medium rounded-lg text-text-secondary hover:text-text-primary transition-smooth">
+                    <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+                    </svg>
+                    Print Profile
+                </button>
+                <button onclick="deleteStudent()" class="px-4 py-2 border border-error-200 text-error-600 rounded-lg hover:bg-error-50 transition-smooth">
+                    <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                    Delete Student
+                </button>
+            </div>
+        </div>
+
+        <!-- Profile Content -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <!-- Student Info Sidebar -->
+            <div class="lg:col-span-4">
+                <div class="bg-surface rounded-xl shadow-card border border-border-light p-6 sticky top-8">
+                    <!-- Student Photo -->
+                    <div class="text-center mb-6">
+                        <div class="relative inline-block">
+                            <img id="studentPhoto" src="https://images.pixabay.com/photo/2016/11/21/12/42/beard-1845166_1280.jpg" alt="Student Photo" class="w-32 h-32 rounded-full object-cover border-4 border-border-light" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                            <button class="absolute bottom-2 right-2 w-8 h-8 bg-primary-600 text-white rounded-full hover:bg-primary-700 transition-smooth">
+                                <svg class="w-4 h-4 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Key Information -->
+                    <div class="space-y-4">
+                        <div class="text-center">
+                            <h2 id="studentName" class="text-xl font-semibold text-text-primary mb-1">Sarah Johnson</h2>
+                            <p id="studentId" class="text-text-secondary font-mono">STU-2024-001</p>
+                        </div>
+
+                        <div class="flex justify-center">
+                            <span id="studentStatus" class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-success-100 text-success-600">
+                                <div class="w-2 h-2 bg-success-600 rounded-full mr-2"></div>
+                                Active
+                            </span>
+                        </div>
+
+                        <!-- Quick Stats -->
+                        <div class="grid grid-cols-2 gap-4 pt-4 border-t border-border-light">
+                            <div class="text-center">
+                                <div class="text-2xl font-semibold text-text-primary">3.8</div>
+                                <div class="text-sm text-text-secondary">GPA</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-semibold text-text-primary">Junior</div>
+                                <div class="text-sm text-text-secondary">Year</div>
+                            </div>
+                        </div>
+
+                        <!-- Contact Quick Actions -->
+                        <div class="pt-4 border-t border-border-light space-y-2">
+                            <button class="w-full flex items-center justify-center px-4 py-2 bg-primary-50 text-primary-600 rounded-lg hover:bg-primary-100 transition-smooth">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                                Send Email
+                            </button>
+                            <button class="w-full flex items-center justify-center px-4 py-2 bg-secondary-50 text-secondary-600 rounded-lg hover:bg-secondary-100 transition-smooth">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                </svg>
+                                Call Student
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="lg:col-span-8">
+                <!-- Tab Navigation -->
+                <div class="bg-surface rounded-xl shadow-card border border-border-light">
+                    <div class="border-b border-border-light">
+                        <nav class="flex space-x-8 px-6" aria-label="Tabs">
+                            <button onclick="switchTab('personal')" class="tab-button active py-4 px-1 border-b-2 border-primary-600 font-medium text-sm text-primary-600">
+                                Personal Information
+                            </button>
+                            <button onclick="switchTab('academic')" class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-text-secondary hover:text-text-primary hover:border-border-medium transition-smooth">
+                                Academic Records
+                            </button>
+                            <button onclick="switchTab('contact')" class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-text-secondary hover:text-text-primary hover:border-border-medium transition-smooth">
+                                Contact Details
+                            </button>
+                            <button onclick="switchTab('documents')" class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-text-secondary hover:text-text-primary hover:border-border-medium transition-smooth">
+                                Documents
+                            </button>
+                        </nav>
+                    </div>
+
+                    <!-- Tab Content -->
+                    <div class="p-6">
+                        <!-- Personal Information Tab -->
+                        <div id="personalTab" class="tab-content">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-lg font-semibold text-text-primary">Personal Information</h3>
+                                <button id="editPersonalBtn" onclick="toggleEdit('personal')" class="px-4 py-2 border border-border-medium rounded-lg text-text-secondary hover:text-text-primary transition-smooth">
+                                    <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                    </svg>
+                                    Edit
+                                </button>
+                            </div>
+
+                            <form id="personalForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-text-primary mb-2">First Name *</label>
+                                    <input type="text" id="firstName" value="Sarah" readonly class="w-full px-4 py-3 border border-border-light rounded-lg bg-secondary-50 text-text-primary focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-smooth" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-text-primary mb-2">Last Name *</label>
+                                    <input type="text" id="lastName" value="Johnson" readonly class="w-full px-4 py-3 border border-border-light rounded-lg bg-secondary-50 text-text-primary focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-smooth" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-text-primary mb-2">Date of Birth *</label>
+                                    <input type="date" id="dateOfBirth" value="2002-03-15" readonly class="w-full px-4 py-3 border border-border-light rounded-lg bg-secondary-50 text-text-primary focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-smooth" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-text-primary mb-2">Gender</label>
+                                    <select id="gender" disabled class="w-full px-4 py-3 border border-border-light rounded-lg bg-secondary-50 text-text-primary focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-smooth">
+                                        <option value="female" selected>Female</option>
+                                        <option value="male">Male</option>
+                                        <option value="other">Other</option>
+                                        <option value="prefer-not-to-say">Prefer not to say</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-text-primary mb-2">Social Security Number</label>
+                                    <input type="text" id="ssn" value="***-**-1234" readonly class="w-full px-4 py-3 border border-border-light rounded-lg bg-secondary-50 text-text-primary focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-smooth" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-text-primary mb-2">Nationality</label>
+                                    <input type="text" id="nationality" value="United States" readonly class="w-full px-4 py-3 border border-border-light rounded-lg bg-secondary-50 text-text-primary focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-smooth" />
+                                </div>
+                                <div class="md:col-span-2">
+                                    <label class="block text-sm font-medium text-text-primary mb-2">Emergency Contact</label>
+                                    <input type="text" id="emergencyContact" value="Mary Johnson (Mother) - (555) 123-4567" readonly class="w-full px-4 py-3 border border-border-light rounded-lg bg-secondary-50 text-text-primary focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-smooth" />
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Academic Records Tab -->
+                        <div id="academicTab" class="tab-content hidden">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-lg font-semibold text-text-primary">Academic Records</h3>
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-sm text-text-secondary">Overall GPA:</span>
+                                    <span class="text-lg font-semibold text-primary-600">3.8</span>
+                                </div>
+                            </div>
+
+                            <!-- Academic Summary -->
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                                <div class="bg-primary-50 rounded-lg p-4">
+                                    <div class="text-2xl font-semibold text-primary-600">Junior</div>
+                                    <div class="text-sm text-primary-600">Current Year</div>
+                                </div>
+                                <div class="bg-success-50 rounded-lg p-4">
+                                    <div class="text-2xl font-semibold text-success-600">126</div>
+                                    <div class="text-sm text-success-600">Credits Earned</div>
+                                </div>
+                                <div class="bg-accent-50 rounded-lg p-4">
+                                    <div class="text-2xl font-semibold text-accent-600">Computer Science</div>
+                                    <div class="text-sm text-accent-600">Major</div>
+                                </div>
+                            </div>
+
+                            <!-- Grade History Table -->
+                            <div class="bg-surface border border-border-light rounded-lg overflow-hidden">
+                                <div class="px-6 py-4 border-b border-border-light">
+                                    <h4 class="text-lg font-medium text-text-primary">Grade History</h4>
+                                </div>
+                                <div class="overflow-x-auto">
+                                    <table class="min-w-full divide-y divide-border-light">
+                                        <thead class="bg-secondary-50">
+                                            <tr>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Semester</th>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Course</th>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Credits</th>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Grade</th>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">GPA Points</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg-surface divide-y divide-border-light">
+                                            <tr>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-text-primary">Fall 2024</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-text-primary">Data Structures</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-text-secondary">3</td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-success-100 text-success-800">A</span>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-text-secondary">12.0</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-text-primary">Fall 2024</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-text-primary">Database Systems</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-text-secondary">3</td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-success-100 text-success-800">A-</span>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-text-secondary">11.1</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-text-primary">Fall 2024</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-text-primary">Software Engineering</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-text-secondary">4</td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800">B+</span>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-text-secondary">13.2</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contact Details Tab -->
+                        <div id="contactTab" class="tab-content hidden">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-lg font-semibold text-text-primary">Contact Details</h3>
+                                <button id="editContactBtn" onclick="toggleEdit('contact')" class="px-4 py-2 border border-border-medium rounded-lg text-text-secondary hover:text-text-primary transition-smooth">
+                                    <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                    </svg>
+                                    Edit
+                                </button>
+                            </div>
+
+                            <form id="contactForm" class="space-y-8">
+                                <!-- Primary Contact -->
+                                <div>
+                                    <h4 class="text-md font-medium text-text-primary mb-4">Primary Contact</h4>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label class="block text-sm font-medium text-text-primary mb-2">Email Address *</label>
+                                            <input type="email" id="email" value="sarah.johnson@student.edu" readonly class="w-full px-4 py-3 border border-border-light rounded-lg bg-secondary-50 text-text-primary focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-smooth" />
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-text-primary mb-2">Phone Number</label>
+                                            <input type="tel" id="phone" value="(555) 987-6543" readonly class="w-full px-4 py-3 border border-border-light rounded-lg bg-secondary-50 text-text-primary focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-smooth" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Address Information -->
+                                <div>
+                                    <div class="flex items-center justify-between mb-4">
+                                        <h4 class="text-md font-medium text-text-primary">Address Information</h4>
+                                        <button type="button" class="text-primary-600 hover:text-primary-700 text-sm font-medium transition-smooth">
+                                            + Add Address
+                                        </button>
+                                    </div>
+                                    <div class="space-y-6">
+                                        <!-- Current Address -->
+                                        <div class="border border-border-light rounded-lg p-4">
+                                            <div class="flex items-center justify-between mb-3">
+                                                <span class="text-sm font-medium text-text-primary">Current Address</span>
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800">Primary</span>
+                                            </div>
+                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                <div class="md:col-span-2">
+                                                    <label class="block text-sm font-medium text-text-primary mb-2">Street Address</label>
+                                                    <input type="text" value="123 University Avenue" readonly class="w-full px-4 py-3 border border-border-light rounded-lg bg-secondary-50 text-text-primary focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-smooth" />
+                                                </div>
+                                                <div>
+                                                    <label class="block text-sm font-medium text-text-primary mb-2">City</label>
+                                                    <input type="text" value="College Town" readonly class="w-full px-4 py-3 border border-border-light rounded-lg bg-secondary-50 text-text-primary focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-smooth" />
+                                                </div>
+                                                <div>
+                                                    <label class="block text-sm font-medium text-text-primary mb-2">State</label>
+                                                    <input type="text" value="CA" readonly class="w-full px-4 py-3 border border-border-light rounded-lg bg-secondary-50 text-text-primary focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-smooth" />
+                                                </div>
+                                                <div>
+                                                    <label class="block text-sm font-medium text-text-primary mb-2">ZIP Code</label>
+                                                    <input type="text" value="90210" readonly class="w-full px-4 py-3 border border-border-light rounded-lg bg-secondary-50 text-text-primary focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-smooth" />
+                                                </div>
+                                                <div>
+                                                    <label class="block text-sm font-medium text-text-primary mb-2">Country</label>
+                                                    <input type="text" value="United States" readonly class="w-full px-4 py-3 border border-border-light rounded-lg bg-secondary-50 text-text-primary focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-smooth" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Documents Tab -->
+                        <div id="documentsTab" class="tab-content hidden">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-lg font-semibold text-text-primary">Documents</h3>
+                                <button class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-smooth">
+                                    <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                                    </svg>
+                                    Upload Document
+                                </button>
+                            </div>
+
+                            <!-- Document Categories -->
+                            <div class="space-y-6">
+                                <!-- Transcripts -->
+                                <div>
+                                    <h4 class="text-md font-medium text-text-primary mb-4">Transcripts</h4>
+                                    <div class="space-y-3">
+                                        <div class="flex items-center justify-between p-4 border border-border-light rounded-lg hover:bg-secondary-50 transition-smooth">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="w-10 h-10 bg-error-100 rounded-lg flex items-center justify-center">
+                                                    <svg class="w-5 h-5 text-error-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    <div class="text-sm font-medium text-text-primary">Official_Transcript_Fall_2024.pdf</div>
+                                                    <div class="text-xs text-text-secondary">Uploaded on Dec 15, 2024 • 2.3 MB</div>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center space-x-2">
+                                                <button class="p-2 text-text-secondary hover:text-primary-600 transition-smooth">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                                    </svg>
+                                                </button>
+                                                <button class="p-2 text-text-secondary hover:text-error-600 transition-smooth">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Certificates -->
+                                <div>
+                                    <h4 class="text-md font-medium text-text-primary mb-4">Certificates</h4>
+                                    <div class="space-y-3">
+                                        <div class="flex items-center justify-between p-4 border border-border-light rounded-lg hover:bg-secondary-50 transition-smooth">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="w-10 h-10 bg-success-100 rounded-lg flex items-center justify-center">
+                                                    <svg class="w-5 h-5 text-success-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    <div class="text-sm font-medium text-text-primary">Dean's_List_Certificate_2024.pdf</div>
+                                                    <div class="text-xs text-text-secondary">Uploaded on Nov 20, 2024 • 1.8 MB</div>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center space-x-2">
+                                                <button class="p-2 text-text-secondary hover:text-primary-600 transition-smooth">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                                    </svg>
+                                                </button>
+                                                <button class="p-2 text-text-secondary hover:text-error-600 transition-smooth">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Upload Area -->
+                                <div class="border-2 border-dashed border-border-medium rounded-lg p-8 text-center">
+                                    <svg class="mx-auto h-12 w-12 text-text-secondary" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <div class="mt-4">
+                                        <label for="file-upload" class="cursor-pointer">
+                                            <span class="mt-2 block text-sm font-medium text-text-primary">
+                                                Drop files here or click to upload
+                                            </span>
+                                            <input id="file-upload" name="file-upload" type="file" class="sr-only" multiple />
+                                        </label>
+                                        <p class="mt-2 text-xs text-text-secondary">
+                                            PDF, DOC, DOCX up to 10MB
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-surface rounded-xl shadow-modal p-6 max-w-md w-full mx-4">
+            <div class="flex items-center mb-4">
+                <div class="w-10 h-10 bg-error-100 rounded-full flex items-center justify-center mr-3">
+                    <svg class="w-5 h-5 text-error-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.464 0L4.35 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-text-primary">Delete Student</h3>
+            </div>
+            <p class="text-text-secondary mb-6">
+                Are you sure you want to delete this student record? This action cannot be undone and will permanently remove all associated data.
+            </p>
+            <div class="flex justify-end space-x-3">
+                <button onclick="closeDeleteModal()" class="px-4 py-2 border border-border-medium rounded-lg text-text-secondary hover:text-text-primary transition-smooth">
+                    Cancel
+                </button>
+                <button onclick="confirmDelete()" class="px-4 py-2 bg-error-600 text-white rounded-lg hover:bg-error-700 transition-smooth">
+                    Delete Student
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Mock student data
+        const studentData = {
+            id: 'STU-2024-001',
+            firstName: 'Sarah',
+            lastName: 'Johnson',
+            email: 'sarah.johnson@student.edu',
+            phone: '(555) 987-6543',
+            dateOfBirth: '2002-03-15',
+            gender: 'female',
+            ssn: '***-**-1234',
+            nationality: 'United States',
+            emergencyContact: 'Mary Johnson (Mother) - (555) 123-4567',
+            status: 'active',
+            gpa: 3.8,
+            year: 'Junior',
+            major: 'Computer Science',
+            credits: 126,
+            photo: 'https://images.pixabay.com/photo/2016/11/21/12/42/beard-1845166_1280.jpg'
+        };
+
+        let isEditMode = {
+            personal: false,
+            contact: false
+        };
+
+        // Initialize page
+        window.addEventListener('load', function() {
+            checkAuthentication();
+            loadStudentData();
+        });
+
+        // Check authentication
+        function checkAuthentication() {
+            const session = localStorage.getItem('userSession') || sessionStorage.getItem('userSession');
+            if (!session) {
+                window.location.href = 'login_screen.html';
+                return;
+            }
+            
+            try {
+                const sessionData = JSON.parse(session);
+                document.getElementById('userNameDisplay').textContent = sessionData.user.name;
+            } catch (e) {
+                window.location.href = 'login_screen.html';
+            }
+        }
+
+        // Load student data
+        function loadStudentData() {
+            // Update breadcrumb
+            document.getElementById('studentNameBreadcrumb').textContent = `${studentData.firstName} ${studentData.lastName}`;
+            
+            // Update sidebar
+            document.getElementById('studentName').textContent = `${studentData.firstName} ${studentData.lastName}`;
+            document.getElementById('studentId').textContent = studentData.id;
+            document.getElementById('studentPhoto').src = studentData.photo;
+            
+            // Update status
+            const statusElement = document.getElementById('studentStatus');
+            if (studentData.status === 'active') {
+                statusElement.className = 'inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-success-100 text-success-600';
+                statusElement.innerHTML = '<div class="w-2 h-2 bg-success-600 rounded-full mr-2"></div>Active';
+            }
+            
+            // Load form data
+            document.getElementById('firstName').value = studentData.firstName;
+            document.getElementById('lastName').value = studentData.lastName;
+            document.getElementById('dateOfBirth').value = studentData.dateOfBirth;
+            document.getElementById('gender').value = studentData.gender;
+            document.getElementById('ssn').value = studentData.ssn;
+            document.getElementById('nationality').value = studentData.nationality;
+            document.getElementById('emergencyContact').value = studentData.emergencyContact;
+            document.getElementById('email').value = studentData.email;
+            document.getElementById('phone').value = studentData.phone;
+        }
+
+        // Tab switching
+        function switchTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+            
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active', 'border-primary-600', 'text-primary-600');
+                button.classList.add('border-transparent', 'text-text-secondary');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName + 'Tab').classList.remove('hidden');
+            
+            // Add active class to selected tab button
+            event.target.classList.add('active', 'border-primary-600', 'text-primary-600');
+            event.target.classList.remove('border-transparent', 'text-text-secondary');
+        }
+
+        // Toggle edit mode
+        function toggleEdit(section) {
+            const isCurrentlyEditing = isEditMode[section];
+            const form = document.getElementById(section + 'Form');
+            const button = document.getElementById('edit' + section.charAt(0).toUpperCase() + section.slice(1) + 'Btn');
+            const saveButton = document.getElementById('saveButton');
+            
+            if (isCurrentlyEditing) {
+                // Switch to read-only mode
+                const inputs = form.querySelectorAll('input, select');
+                inputs.forEach(input => {
+                    input.readOnly = true;
+                    input.disabled = input.tagName === 'SELECT';
+                    input.classList.add('bg-secondary-50');
+                    input.classList.remove('bg-surface');
+                });
+                
+                button.innerHTML = `
+                    <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                    </svg>
+                    Edit
+                `;
+                
+                saveButton.classList.add('hidden');
+                isEditMode[section] = false;
+            } else {
+                // Switch to edit mode
+                const inputs = form.querySelectorAll('input, select');
+                inputs.forEach(input => {
+                    input.readOnly = false;
+                    input.disabled = false;
+                    input.classList.remove('bg-secondary-50');
+                    input.classList.add('bg-surface');
+                });
+                
+                button.innerHTML = `
+                    <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                    Cancel
+                `;
+                
+                saveButton.classList.remove('hidden');
+                isEditMode[section] = true;
+            }
+        }
+
+        // Save changes
+        function saveChanges() {
+            // Simulate saving
+            const saveButton = document.getElementById('saveButton');
+            const originalText = saveButton.innerHTML;
+            
+            saveButton.innerHTML = `
+                <svg class="animate-spin -mr-1 ml-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Saving...
+            `;
+            saveButton.disabled = true;
+            
+            setTimeout(() => {
+                saveButton.innerHTML = `
+                    <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    Saved!
+                `;
+                saveButton.classList.remove('bg-primary-600', 'hover:bg-primary-700');
+                saveButton.classList.add('bg-success-600');
+                
+                setTimeout(() => {
+                    saveButton.innerHTML = originalText;
+                    saveButton.disabled = false;
+                    saveButton.classList.remove('bg-success-600');
+                    saveButton.classList.add('bg-primary-600', 'hover:bg-primary-700');
+                    saveButton.classList.add('hidden');
+                    
+                    // Reset edit modes
+                    Object.keys(isEditMode).forEach(section => {
+                        if (isEditMode[section]) {
+                            toggleEdit(section);
+                        }
+                    });
+                }, 2000);
+            }, 1500);
+        }
+
+        // Print profile
+        function printProfile() {
+            window.print();
+        }
+
+        // Delete student
+        function deleteStudent() {
+            document.getElementById('deleteModal').classList.remove('hidden');
+        }
+
+        // Close delete modal
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').classList.add('hidden');
+        }
+
+        // Confirm delete
+        function confirmDelete() {
+            // Simulate deletion
+            alert('Student record would be deleted. Redirecting to student list...');
+            window.location.href = 'student_records_management.html';
+        }
+
+        // Go back
+        function goBack() {
+            window.location.href = 'student_records_management.html';
+        }
+
+        // Logout
+        function logout() {
+            localStorage.removeItem('userSession');
+            sessionStorage.removeItem('userSession');
+            window.location.href = 'login_screen.html';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('deleteModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeDeleteModal();
+            }
+        });
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>

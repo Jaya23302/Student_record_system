@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Student Records Manager</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fstudentre4158back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.6"></script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-primary-50 via-background to-secondary-100 font-inter">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 opacity-5">
+        <svg class="w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                    <path d="M 10 0 L 0 0 0 10" fill="none" stroke="currentColor" stroke-width="0.5"/>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)"/>
+        </svg>
+    </div>
+
+    <!-- Main Container using Bootstrap-inspired container -->
+    <div class="container">
+        <div class="relative min-h-screen d-flex align-items-center justify-content-center px-4 py-8">
+            <!-- Login Card with Bootstrap-style card -->
+            <div class="w-full max-w-md">
+                <!-- Institution Branding -->
+                <div class="text-center mb-8 fade-in">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-primary-600 rounded-xl mb-4 elevated-card">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                        </svg>
+                    </div>
+                    <h1 class="text-2xl font-semibold text-text-primary mb-2">Student Records Manager</h1>
+                    <p class="text-text-secondary">Sign in to access your dashboard</p>
+                </div>
+
+                <!-- Error Alert using Bootstrap-style alert -->
+                <div id="errorAlert" class="d-none mb-6 alert alert-danger slide-in">
+                    <div class="d-flex align-items-center">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span id="errorMessage" class="text-sm font-medium flex-1"></span>
+                        <button onclick="hideError()" class="ml-3 hover:opacity-70 transition-smooth">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Login Form Card using Bootstrap-style card -->
+                <div class="card elevated-card slide-in">
+                    <div class="card-body">
+                        <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-6">
+                            <!-- Email Field using Bootstrap-style form controls -->
+                            <div>
+                                <label for="email" class="form-label">
+                                    Email Address
+                                </label>
+                                <div class="input-group">
+                                    <input type="email" id="email" name="email" required class="form-control focus-ring" placeholder="Enter your email address" autocomplete="email" />
+                                    <span class="input-group-text">
+                                        <svg class="w-5 h-5 text-secondary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"/>
+                                        </svg>
+                                    </span>
+                                </div>
+                                <div id="emailError" class="d-none form-text text-error-600"></div>
+                            </div>
+
+                            <!-- Password Field -->
+                            <div>
+                                <label for="password" class="form-label">
+                                    Password
+                                </label>
+                                <div class="relative">
+                                    <input type="password" id="password" name="password" required class="form-control focus-ring pr-12" placeholder="Enter your password" autocomplete="current-password" />
+                                    <button type="button" onclick="togglePassword()" class="absolute inset-y-0 right-0 flex items-center pr-3 text-secondary-400 hover:text-secondary-600 transition-smooth">
+                                        <svg id="eyeIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div id="passwordError" class="d-none form-text text-error-600"></div>
+                            </div>
+
+                            <!-- Remember Me & Forgot Password using Bootstrap utilities -->
+                            <div class="d-flex align-items-center justify-between">
+                                <div class="d-flex align-items-center">
+                                    <input id="remember" name="remember" type="checkbox" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-border-medium rounded transition-smooth" />
+                                    <label for="remember" class="ml-2 text-sm text-text-secondary">
+                                        Remember me
+                                    </label>
+                                </div>
+                                <a href="javascript:void(0)" onclick="showForgotPassword()" class="text-sm text-primary-600 hover:text-primary-700 font-medium transition-smooth">
+                                    Forgot password?
+                                </a>
+                            </div>
+
+                            <!-- Sign In Button using Bootstrap-style button -->
+                            <button type="submit" id="loginButton" class="btn btn-primary btn-lg w-full">
+                                <span id="loginButtonText">Sign In</span>
+                                <svg id="loginSpinner" class="d-none animate-spin ml-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                                </svg>
+                            </button>
+                        </form>
+
+                        <!-- Registration Link -->
+                        <div class="mt-6 text-center">
+                            <p class="text-sm text-text-secondary">
+                                New user? 
+                                <a href="registration_screen.html" class="text-primary-600 hover:text-primary-700 font-medium transition-smooth">
+                                    Register here
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Demo Credentials using Bootstrap-style alert -->
+                <div class="alert alert-primary mt-6 glass-effect">
+                    <h3 class="text-sm font-medium mb-2">Demo Credentials</h3>
+                    <div class="text-xs space-y-1">
+                        <div class="badge badge-primary mr-2">Admin</div>admin@school.edu / admin123<br />
+                        <div class="badge badge-success mr-2">Teacher</div>teacher@school.edu / teacher123<br />
+                        <div class="badge badge-warning mr-2">Staff</div>staff@school.edu / staff123
+                    </div>
+                </div>
+
+                <!-- Security Footer with Bootstrap utilities -->
+                <div class="mt-8 text-center">
+                    <div class="d-flex align-items-center justify-content-center space-x-4 text-xs text-text-secondary">
+                        <div class="d-flex align-items-center">
+                            <svg class="w-4 h-4 text-success-600 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                            </svg>
+                            SSL Secured
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <svg class="w-4 h-4 text-success-600 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                            </svg>
+                            Data Protected
+                        </div>
+                    </div>
+                    <p class="mt-2 text-xs text-text-secondary">
+                        © 2025 Student Records Manager. All Rights Reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Mock user credentials
+        const mockUsers = [
+            { email: 'admin@school.edu', password: 'admin123', role: 'admin', name: 'Admin User' },
+            { email: 'teacher@school.edu', password: 'teacher123', role: 'teacher', name: 'John Teacher' },
+            { email: 'staff@school.edu', password: 'staff123', role: 'staff', name: 'Jane Staff' }
+        ];
+
+        // Toggle password visibility
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eyeIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"></path>
+                `;
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                `;
+            }
+        }
+
+        // Show error message with Bootstrap classes
+        function showError(message) {
+            const errorAlert = document.getElementById('errorAlert');
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = message;
+            errorAlert.classList.remove('d-none');
+            errorAlert.classList.add('d-block');
+        }
+
+        // Hide error message with Bootstrap classes
+        function hideError() {
+            const errorAlert = document.getElementById('errorAlert');
+            errorAlert.classList.remove('d-block');
+            errorAlert.classList.add('d-none');
+        }
+
+        // Show forgot password alert
+        function showForgotPassword() {
+            alert('Password reset functionality would be implemented here. For demo purposes, use the provided credentials.');
+        }
+
+        // Validate email format
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Clear field errors with Bootstrap classes
+        function clearFieldError(fieldId) {
+            const errorElement = document.getElementById(fieldId + 'Error');
+            if (errorElement) {
+                errorElement.classList.add('d-none');
+                errorElement.textContent = '';
+            }
+        }
+
+        // Show field error with Bootstrap classes
+        function showFieldError(fieldId, message) {
+            const errorElement = document.getElementById(fieldId + 'Error');
+            if (errorElement) {
+                errorElement.textContent = message;
+                errorElement.classList.remove('d-none');
+            }
+        }
+
+        // Handle form submission with enhanced UX
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            // Clear previous errors
+            hideError();
+            clearFieldError('email');
+            clearFieldError('password');
+            
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const remember = document.getElementById('remember').checked;
+            
+            // Validation
+            let hasErrors = false;
+            
+            if (!email) {
+                showFieldError('email', 'Email is required');
+                hasErrors = true;
+            } else if (!validateEmail(email)) {
+                showFieldError('email', 'Please enter a valid email address');
+                hasErrors = true;
+            }
+            
+            if (!password) {
+                showFieldError('password', 'Password is required');
+                hasErrors = true;
+            } else if (password.length < 6) {
+                showFieldError('password', 'Password must be at least 6 characters');
+                hasErrors = true;
+            }
+            
+            if (hasErrors) {
+                return;
+            }
+            
+            // Show loading state using Bootstrap classes
+            const loginButton = document.getElementById('loginButton');
+            const loginButtonText = document.getElementById('loginButtonText');
+            const loginSpinner = document.getElementById('loginSpinner');
+            
+            loginButton.disabled = true;
+            loginButtonText.textContent = 'Signing In...';
+            loginSpinner.classList.remove('d-none');
+            
+            // Simulate API call with better UX
+            setTimeout(() => {
+                // Find user
+                const user = mockUsers.find(u => u.email === email && u.password === password);
+                
+                if (user) {
+                    // Store user session
+                    const sessionData = {
+                        user: {
+                            id: Date.now(),
+                            email: user.email,
+                            name: user.name,
+                            role: user.role
+                        },
+                        timestamp: new Date().toISOString(),
+                        remember: remember
+                    };
+                    
+                    if (remember) {
+                        localStorage.setItem('userSession', JSON.stringify(sessionData));
+                    } else {
+                        sessionStorage.setItem('userSession', JSON.stringify(sessionData));
+                    }
+                    
+                    // Success feedback with Bootstrap button classes
+                    loginButtonText.textContent = 'Success!';
+                    loginSpinner.classList.add('d-none');
+                    loginButton.className = 'btn btn-success btn-lg w-full';
+                    
+                    // Redirect to dashboard
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1000);
+                } else {
+                    // Reset button state
+                    loginButton.disabled = false;
+                    loginButtonText.textContent = 'Sign In';
+                    loginSpinner.classList.add('d-none');
+                    
+                    // Show error
+                    showError('Invalid email or password. Please check your credentials and try again.');
+                }
+            }, 1500);
+        }
+
+        // Real-time validation
+        document.getElementById('email').addEventListener('input', function() {
+            clearFieldError('email');
+            hideError();
+        });
+
+        document.getElementById('password').addEventListener('input', function() {
+            clearFieldError('password');
+            hideError();
+        });
+
+        // Check if user is already logged in
+        window.addEventListener('load', function() {
+            const session = localStorage.getItem('userSession') || sessionStorage.getItem('userSession');
+            if (session) {
+                try {
+                    const sessionData = JSON.parse(session);
+                    // Check if session is still valid (within 24 hours)
+                    const sessionTime = new Date(sessionData.timestamp);
+                    const now = new Date();
+                    const hoursDiff = (now - sessionTime) / (1000 * 60 * 60);
+                    
+                    if (hoursDiff < 24) {
+                        window.location.href = 'dashboard.html';
+                    } else {
+                        // Clear expired session
+                        localStorage.removeItem('userSession');
+                        sessionStorage.removeItem('userSession');
+                    }
+                } catch (e) {
+                    // Clear invalid session data
+                    localStorage.removeItem('userSession');
+                    sessionStorage.removeItem('userSession');
+                }
+            }
+        });
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>
