@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Records Manager</title>
+    <link rel="stylesheet" href="css/main.css" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .redirect-container {
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            animation: slideIn 0.6s ease-out;
+        }
+        
+        .main-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .logo {
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #2563EB, #1D4ED8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .welcome-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1E293B;
+            margin-bottom: 8px;
+        }
+        
+        .loading-text {
+            font-size: 1rem;
+            color: #64748B;
+            margin-bottom: 30px;
+        }
+        
+        .spinner {
+            border: 4px solid #E2E8F0;
+            border-top: 4px solid #2563EB;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes slideIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(-20px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+        
+        .redirect-info {
+            font-size: 0.875rem;
+            color: #64748B;
+            margin-top: 20px;
+            line-height: 1.5;
+        }
+        
+        .manual-link {
+            display: inline-flex;
+            align-items: center;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background: #2563EB;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+        }
+        
+        .manual-link:hover {
+            background: #1D4ED8;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 8px -1px rgba(37, 99, 235, 0.3);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 16px;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #E2E8F0;
+        }
+        
+        .feature-item {
+            text-align: center;
+        }
+        
+        .feature-icon {
+            width: 32px;
+            height: 32px;
+            background: #EFF6FF;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px;
+            color: #2563EB;
+        }
+        
+        .feature-text {
+            font-size: 0.75rem;
+            color: #64748B;
+            font-weight: 500;
+        }
+    </style>
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fstudentre4158back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.6"></script>
+</head>
+<body>
+    <div class="redirect-container">
+        <div class="main-card">
+            <div class="logo">📚 JP Colleges/Universities</div>
+            <h1 class="welcome-title">Student Records Manager</h1>
+            <div class="loading-text">Redirecting to Login...</div>
+            <div class="spinner"></div>
+            <div class="redirect-info">
+                Please wait while we redirect you to the secure login page.
+                <br />Your data security is our priority.
+            </div>
+            <a href="pages/login_screen.html" class="manual-link">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                </svg>
+                Continue to Login
+            </a>
+            
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                        </svg>
+                    </div>
+                    <div class="feature-text">Secure</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <div class="feature-text">Fast</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                        </svg>
+                    </div>
+                    <div class="feature-text">Reliable</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced redirect logic with better UX
+        let redirectTimer;
+        let countdownTimer;
+        let countdown = 3;
+        
+        function updateCountdown() {
+            const loadingText = document.querySelector('.loading-text');
+            loadingText.textContent = `Redirecting to Login in ${countdown}s...`;
+            
+            if (countdown > 0) {
+                countdown--;
+                countdownTimer = setTimeout(updateCountdown, 1000);
+            }
+        }
+        
+        function initiateRedirect() {
+            // Start countdown
+            updateCountdown();
+            
+            // Redirect after 3 seconds
+            redirectTimer = setTimeout(function() {
+                window.location.href = 'pages/login_screen.html';
+            }, 3000);
+        }
+        
+        // Start redirect process when page loads
+        window.addEventListener('load', function() {
+            // Small delay for better UX
+            setTimeout(initiateRedirect, 1000);
+        });
+        
+        // Fallback redirect in case of any issues
+        window.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                if (window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/')) {
+                    const currentPath = window.location.pathname;
+                    if (currentPath === window.location.pathname) { // Still on same page
+                        window.location.href = 'pages/login_screen.html';
+                    }
+                }
+            }, 5000); // 5 second fallback
+        });
+        
+        // Clear timers if user manually clicks the link
+        document.querySelector('.manual-link').addEventListener('click', function() {
+            clearTimeout(redirectTimer);
+            clearTimeout(countdownTimer);
+        });
+        
+        // Handle visibility change (tab switching)
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'visible') {
+                // Resume redirect if page becomes visible again
+                if (!redirectTimer) {
+                    initiateRedirect();
+                }
+            }
+        });
+    </script>
+<script id="dhws-dataInjector" src="/public/dhws-data-injector.js"></script>
+</body>
+</html>
